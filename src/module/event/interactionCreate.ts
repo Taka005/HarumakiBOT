@@ -58,7 +58,7 @@ export default async(interaction: Interaction)=>{
           ephemeral: true
         });
 
-        description = description + `${interaction.user.displayName}(${interaction.user.id})が参加しました\n`;
+        description = description + `\n${interaction.user.displayName}(${interaction.user.id})が参加しました`;
         footer = `${list.length+1}人が募集済み`;
 
         await interaction.reply({
