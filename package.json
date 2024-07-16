@@ -1,0 +1,28 @@
+{
+  "name": "harumakibot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "npx tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Taka005/HarumakiBOT.git"
+  },
+  "author": "Taka005",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Taka005/HarumakiBOT/issues"
+  },
+  "homepage": "https://github.com/Taka005/HarumakiBOT#readme",
+  "dependencies": {
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10"
+  }
+}
