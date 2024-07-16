@@ -5,7 +5,7 @@ export default async(interaction: Interaction)=>{
     if(interaction.commandName === "totalling"){
       const number = interaction.options.getInteger("number")||0;
 
-      if(number < 0) return await interaction.reply({
+      if(number <= 0) return await interaction.reply({
         embeds:[{
           color: Colors.Red,
           title: `募集人数は1以上で指定してください`
@@ -16,7 +16,7 @@ export default async(interaction: Interaction)=>{
       await interaction.reply({
         embeds:[{
           color: Colors.Green,
-          title: `${number}人ずつ分けます`,
+          title: `${number}人ずつ募集しています`,
           footer:{
             text: "0人が募集済み"
           }
@@ -47,7 +47,7 @@ export default async(interaction: Interaction)=>{
       let description = interaction.message.embeds[0].description || "";
       let footer = "";
 
-      const list = description.split("\n");
+      const list = description ? description.split("\n") : [];
 
       if(data[1] === "join"){
         if(list.filter(ele=>ele.includes(interaction.user.id))[0]) return await interaction.reply({
@@ -58,8 +58,16 @@ export default async(interaction: Interaction)=>{
           ephemeral: true
         });
 
-        description.concat(`${interaction.user.displayName}(${interaction.user.id})が参加しました\n`);
+        description = description + `${interaction.user.displayName}(${interaction.user.id})が参加しました\n`;
         footer = `${list.length+1}人が募集済み`;
+
+        await interaction.reply({
+          embeds:[{
+            color: Colors.Green,
+            title: `参加しました`
+          }],
+          ephemeral: true
+        });
       }else if(data[1] === "leave"){
         if(!list.filter(ele=>ele.includes(interaction.user.id))[0]) return await interaction.reply({
           embeds:[{
@@ -71,6 +79,14 @@ export default async(interaction: Interaction)=>{
 
         description = list.filter(ele=>!ele.includes(interaction.user.id)).join("\n");
         footer = `${list.length-1}人が募集済み`;
+
+        await interaction.reply({
+          embeds:[{
+            color: Colors.Green,
+            title: `脱退しました`
+          }],
+          ephemeral: true
+        });
       }else if(data[1] === "stop"){
         if(data[2] !== interaction.user.id) return await interaction.reply({
           embeds:[{
@@ -110,8 +126,18 @@ export default async(interaction: Interaction)=>{
 
         result.forEach(async(id,i)=>{
           await interaction.channel?.send({
-            content: `グループ${i+1}\n\n`+id.map(d=>`<@${d}>`).join("\n")
+            content: `**グループ${i+1}**\n\n`+id.map(d=>`<@${d}>`).join("\n")
           }).catch(()=>{});
+        });
+
+        interaction.message.components = [];
+
+        await interaction.reply({
+          embeds:[{
+            color: Colors.Green,
+            title: `締め切りました`
+          }],
+          ephemeral: true
         });
       }
 
@@ -126,8 +152,6 @@ export default async(interaction: Interaction)=>{
         }],
         components: interaction.message.components
       }).catch(()=>{});
-
-      await interaction.deferUpdate({});
     }
   }
 }
