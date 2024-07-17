@@ -18,7 +18,7 @@ export default async(interaction: Interaction)=>{
           color: Colors.Green,
           title: `${number}人ずつ募集しています`,
           footer:{
-            text: "0人が募集済み"
+            text: "0人が参加済み"
           }
         }],
         components:[
@@ -59,7 +59,7 @@ export default async(interaction: Interaction)=>{
         });
 
         description = description + `\n${interaction.user.displayName}(${interaction.user.id})が参加しました`;
-        footer = `${list.length+1}人が募集済み`;
+        footer = `${list.length+1}人が参加済み`;
 
         await interaction.reply({
           embeds:[{
@@ -78,7 +78,7 @@ export default async(interaction: Interaction)=>{
         });
 
         description = list.filter(ele=>!ele.includes(interaction.user.id)).join("\n");
-        footer = `${list.length-1}人が募集済み`;
+        footer = `${list.length-1}人が参加済み`;
 
         await interaction.reply({
           embeds:[{
