@@ -124,11 +124,15 @@ export default async(interaction: Interaction)=>{
           result.push(ids.slice(i,i + members));
         }
 
+        let message = "";
+
         result.forEach(async(id,i)=>{
-          await interaction.channel?.send({
-            content: `**グループ${i+1}**\n\n`+id.map(d=>`<@${d}>`).join("\n")
-          }).catch(()=>{});
+          message = message + `\n\n**グループ${i+1}**\n\n`+id.map(d=>`<@${d}>`).join("\n");
         });
+
+        await interaction.channel?.send({
+          content: message
+        }).catch(()=>{});
 
         interaction.message.components = [];
 
